@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd">
+
+	<!-- 对web包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能（除Controller以外） -->
+	<context:component-scan base-package="com.lt" />
+	
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:dataSource/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${database.jdbcUrl}" />
+		<property name="username" value="${database.user}" />
+		<property name="password" value="${database.password}" />
+		<property name="filters" value="stat,wall" />
+		<!-- <property name="connectionProperties" value="druid.stat.slowSqlMillis=5000" 
+			/> -->
+		<property name="maxActive" value="20" />
+		<property name="initialSize" value="1" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="1" />
+		<property name="timeBetweenEvictionRunsMillis" value="3000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="20" />
+	</bean>
+	
+	<!-- mybatis 配置 -->
+	<!-- 配置SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<!-- 配置spring与mybatis 映射 -->
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.**.ibatis.**" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/> 
+	</bean>
+
+	<!-- 使用spring自带的jdbc事务管理，此种方式支持mybatis但不支持hibernate对数据库操作的事务管理 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 使用在类或方法上进行注解方式事务控制 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 使用tx标签配置的拦截器进行事务控制 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+         <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+         </tx:attributes>
+    </tx:advice>
+	<aop:config>
+         <aop:pointcut id="allManagerMethod" expression="execution(* com.*..service..*Service*.*(..))" />
+         <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
+    </aop:config>
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>message/messages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+</beans>
+
+
