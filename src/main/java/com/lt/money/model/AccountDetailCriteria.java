@@ -386,6 +386,66 @@ public class AccountDetailCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andAccountTimeIsNull() {
+            addCriterion("account_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeIsNotNull() {
+            addCriterion("account_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeEqualTo(Date value) {
+            addCriterion("account_time =", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeNotEqualTo(Date value) {
+            addCriterion("account_time <>", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeGreaterThan(Date value) {
+            addCriterion("account_time >", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("account_time >=", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeLessThan(Date value) {
+            addCriterion("account_time <", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeLessThanOrEqualTo(Date value) {
+            addCriterion("account_time <=", value, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeIn(List<Date> values) {
+            addCriterion("account_time in", values, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeNotIn(List<Date> values) {
+            addCriterion("account_time not in", values, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeBetween(Date value1, Date value2) {
+            addCriterion("account_time between", value1, value2, "accountTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAccountTimeNotBetween(Date value1, Date value2) {
+            addCriterion("account_time not between", value1, value2, "accountTime");
+            return (Criteria) this;
+        }
+
         public Criteria andFkUserIdIsNull() {
             addCriterion("fk_user_id is null");
             return (Criteria) this;

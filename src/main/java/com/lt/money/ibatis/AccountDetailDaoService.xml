@@ -6,12 +6,13 @@
     <result column="fk_account_id" property="fkAccountId" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="account_time" property="accountTime" jdbcType="TIMESTAMP" />
     <result column="fk_user_id" property="fkUserId" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.lt.money.model.AccountDetail" extends="BaseResultMap" >
-    <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
+    <result column="account_desc" property="accountDesc" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,10 +73,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, fk_account_id, type, money, fk_user_id, update_time, create_time
+    id, fk_account_id, type, money, account_time, fk_user_id, update_time, create_time
   </sql>
   <sql id="Blob_Column_List" >
-    desc
+    account_desc
   </sql>
   <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lt.money.model.AccountDetailCriteria" >
     select
@@ -135,11 +136,13 @@
   </delete>
   <insert id="insert" parameterType="com.lt.money.model.AccountDetail" >
     insert into t_account_detail (id, fk_account_id, type, 
-      money, fk_user_id, update_time, 
-      create_time, desc)
+      money, account_time, fk_user_id, 
+      update_time, create_time, account_desc
+      )
     values (#{id,jdbcType=VARCHAR}, #{fkAccountId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{money,jdbcType=DECIMAL}, #{fkUserId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{desc,jdbcType=LONGVARCHAR})
+      #{money,jdbcType=DECIMAL}, #{accountTime,jdbcType=TIMESTAMP}, #{fkUserId,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{accountDesc,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.lt.money.model.AccountDetail" >
     insert into t_account_detail
@@ -156,6 +159,9 @@
       <if test="money != null" >
         money,
       </if>
+      <if test="accountTime != null" >
+        account_time,
+      </if>
       <if test="fkUserId != null" >
         fk_user_id,
       </if>
@@ -165,8 +171,8 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="desc != null" >
-        desc,
+      <if test="accountDesc != null" >
+        account_desc,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -182,6 +188,9 @@
       <if test="money != null" >
         #{money,jdbcType=DECIMAL},
       </if>
+      <if test="accountTime != null" >
+        #{accountTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="fkUserId != null" >
         #{fkUserId,jdbcType=VARCHAR},
       </if>
@@ -191,8 +200,8 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="desc != null" >
-        #{desc,jdbcType=LONGVARCHAR},
+      <if test="accountDesc != null" >
+        #{accountDesc,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -217,6 +226,9 @@
       <if test="record.money != null" >
         money = #{record.money,jdbcType=DECIMAL},
       </if>
+      <if test="record.accountTime != null" >
+        account_time = #{record.accountTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.fkUserId != null" >
         fk_user_id = #{record.fkUserId,jdbcType=VARCHAR},
       </if>
@@ -226,8 +238,8 @@
       <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.desc != null" >
-        desc = #{record.desc,jdbcType=LONGVARCHAR},
+      <if test="record.accountDesc != null" >
+        account_desc = #{record.accountDesc,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -240,10 +252,11 @@
       fk_account_id = #{record.fkAccountId,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       money = #{record.money,jdbcType=DECIMAL},
+      account_time = #{record.accountTime,jdbcType=TIMESTAMP},
       fk_user_id = #{record.fkUserId,jdbcType=VARCHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      desc = #{record.desc,jdbcType=LONGVARCHAR}
+      account_desc = #{record.accountDesc,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -254,6 +267,7 @@
       fk_account_id = #{record.fkAccountId,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=INTEGER},
       money = #{record.money,jdbcType=DECIMAL},
+      account_time = #{record.accountTime,jdbcType=TIMESTAMP},
       fk_user_id = #{record.fkUserId,jdbcType=VARCHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -273,6 +287,9 @@
       <if test="money != null" >
         money = #{money,jdbcType=DECIMAL},
       </if>
+      <if test="accountTime != null" >
+        account_time = #{accountTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="fkUserId != null" >
         fk_user_id = #{fkUserId,jdbcType=VARCHAR},
       </if>
@@ -282,8 +299,8 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="desc != null" >
-        desc = #{desc,jdbcType=LONGVARCHAR},
+      <if test="accountDesc != null" >
+        account_desc = #{accountDesc,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -293,10 +310,11 @@
     set fk_account_id = #{fkAccountId,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       money = #{money,jdbcType=DECIMAL},
+      account_time = #{accountTime,jdbcType=TIMESTAMP},
       fk_user_id = #{fkUserId,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      desc = #{desc,jdbcType=LONGVARCHAR}
+      account_desc = #{accountDesc,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lt.money.model.AccountDetail" >
@@ -304,6 +322,7 @@
     set fk_account_id = #{fkAccountId,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
       money = #{money,jdbcType=DECIMAL},
+      account_time = #{accountTime,jdbcType=TIMESTAMP},
       fk_user_id = #{fkUserId,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP}

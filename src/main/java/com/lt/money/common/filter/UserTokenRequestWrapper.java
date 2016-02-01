@@ -1,6 +1,7 @@
 package com.lt.money.common.filter;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
@@ -19,7 +20,8 @@ public class UserTokenRequestWrapper extends HttpServletRequestWrapper{
 	
 	public UserTokenRequestWrapper(HttpServletRequest request) {
 		super(request);
-		params = request.getParameterMap();
+		params = new HashMap<String, String[]>();
+		params.putAll(request.getParameterMap());
 	}
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Map getParameterMap() {  
@@ -75,7 +77,7 @@ public class UserTokenRequestWrapper extends HttpServletRequestWrapper{
 	 * @param request
 	 * @return
 	 */
-	public static String getUsernameByServletRequest(ServletRequest request){
+	public static UserToken getUsernameByServletRequest(ServletRequest request){
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		
 		//获得并校验令牌是否成功令牌
@@ -92,7 +94,7 @@ public class UserTokenRequestWrapper extends HttpServletRequestWrapper{
 		if(StringUtils.isNotEmpty(token)){
 			UserToken userToken = UserToken.getUserToken(token);
 			if(userToken!=null){
-				return userToken.getUsername();
+				return userToken;
 			}
 		}
 		return null;

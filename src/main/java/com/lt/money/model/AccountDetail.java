@@ -13,13 +13,15 @@ public class AccountDetail implements Serializable {
 
     private BigDecimal money;
 
+    private Date accountTime;
+
     private String fkUserId;
 
     private Date updateTime;
 
     private Date createTime;
 
-    private String desc;
+    private String accountDesc;
 
     private static final long serialVersionUID = 1L;
 
@@ -55,6 +57,14 @@ public class AccountDetail implements Serializable {
         this.money = money;
     }
 
+    public Date getAccountTime() {
+        return accountTime;
+    }
+
+    public void setAccountTime(Date accountTime) {
+        this.accountTime = accountTime;
+    }
+
     public String getFkUserId() {
         return fkUserId;
     }
@@ -79,11 +89,11 @@ public class AccountDetail implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getAccountDesc() {
+        return accountDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setAccountDesc(String accountDesc) {
+        this.accountDesc = accountDesc == null ? null : accountDesc.trim();
     }
 }

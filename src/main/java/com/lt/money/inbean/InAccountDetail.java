@@ -8,6 +8,10 @@ public class InAccountDetail {
 	 */
 	private String username;
 	/**
+	 * 用户id
+	 */
+	private String userId;
+	/**
 	 * 添加类型
 	 */
 	private String type;
@@ -20,9 +24,9 @@ public class InAccountDetail {
 	 */
 	private String desc;
 	/**
-	 * 创建时间
+	 * 添加时间
 	 */
-	private Date createTime;
+	private Date accountDay;
 
 	public String getUsername() {
 		return username;
@@ -56,12 +60,19 @@ public class InAccountDetail {
 		this.desc = desc;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
+	public Date getAccountDay() {
+		return accountDay;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setAccountDay(Date accountDay) {
+		this.accountDay = accountDay;
 	}
-	
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }

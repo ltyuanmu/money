@@ -4,6 +4,10 @@ import java.util.Date;
 
 public class InGetAccount {
 	/**
+	 * 账单id
+	 */
+	private String accountId;
+	/**
 	 * 开始时间
 	 */
 	private Date beginDate;
@@ -19,6 +23,10 @@ public class InGetAccount {
 	 * 用户名
 	 */
 	private String username;
+	/**
+	 * 用户Id
+	 */
+	private String userId;
 
 	public Date getBeginDate() {
 		return beginDate;
@@ -50,6 +58,22 @@ public class InGetAccount {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 }

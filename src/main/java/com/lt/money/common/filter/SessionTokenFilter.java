@@ -14,7 +14,9 @@ import org.apache.commons.lang.StringUtils;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
+
 import com.lt.money.code.BaseSetting.OPENURL;
+import com.lt.money.inbean.UserToken;
 
 
 public class SessionTokenFilter implements Filter{
@@ -42,10 +44,11 @@ public class SessionTokenFilter implements Filter{
 			}
 		}
 		//校验是否获得登录名
-		String username=UserTokenRequestWrapper.getUsernameByServletRequest(request);
-		if (StringUtils.isNotEmpty(username)) {
+		UserToken userToken = UserTokenRequestWrapper.getUsernameByServletRequest(request);
+		if (userToken!=null) {
 			UserTokenRequestWrapper requestWarpper = new UserTokenRequestWrapper(httpRequest);
-			requestWarpper.setParameMap("username", username);
+			requestWarpper.setParameMap("username", userToken.getUsername());
+			requestWarpper.setParameMap("userId", userToken.getUserId());
 			chain.doFilter(requestWarpper, response);
 		} else {
 			httpRequest.getRequestDispatcher("/error/").forward(request, response);

@@ -10,6 +10,8 @@ public class AccountDayDetail {
 	private String type;
 	
 	private String desc;
+	
+	private double money;
 
 	public String getAccountDetailId() {
 		return accountDetailId;
@@ -42,5 +44,12 @@ public class AccountDayDetail {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
 }
